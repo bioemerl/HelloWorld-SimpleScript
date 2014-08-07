@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1407021555 source:c:\users\user\documents\cpp projects\simplescript\src\scripthandler.cpp
+	"ScriptHandler.h"
+
+1407010997 c:\users\user\documents\cpp projects\simplescript\include\scripthandler.h
+	<string>
+	<vector>
+	<fstream>
+	<sstream>
+	<queue>
+	<cstdlib>
+	<iostream>
+	<stack>
+
+1407000890 source:c:\users\user\documents\cpp projects\simplescript\src\main.cpp
+	<iostream>
+	"ScriptHandler.h"
+
