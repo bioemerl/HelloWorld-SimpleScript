@@ -111,6 +111,8 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
                 tempmodeule.integername = separatedcodeline.front();
                 separatedcodeline.pop();
                 intvector.push_back(tempmodeule);
+                tempmodeule = intvector[0];
+                std::cout << "name: " << tempmodeule.integername << "value: " << tempmodeule.integerdata << std::endl;
 
             }
             if(separatedcodeline.front() == "float")

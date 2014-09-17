@@ -10,6 +10,7 @@
 #include <iostream>
 #include <stack>
 
+
 //I want to do these things
 //if, while
 //conditionals, addition, subtraction, multiplicatoin, devision
@@ -27,4 +28,5 @@ class ScriptHandler
         int Iwantaprivatevariable;
 };
 
+#include "ScriptHandler.cpp"
 #endif // SCRIPTHANDLER_H

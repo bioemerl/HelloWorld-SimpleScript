@@ -1,4 +1,6 @@
-int temp 10
+int temp 33
+float floatvariable 12.23
+string stringvariable thisisastring
 if 40 = 40
 print 40 is equal to 40
 endif
