@@ -14,6 +14,6 @@ endif
 if 40 <= 50
 print 40 is less than or equal to fifty
 endif
-while 100 = 1001
+while 1001 = 100
 print this should work
 endwhile

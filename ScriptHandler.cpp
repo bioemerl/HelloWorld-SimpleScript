@@ -95,6 +95,7 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
                 if(checkconditions(separatedcodeline) == true)
                 {
                     locationoflastwhile.push(currentline);
+                    std::cout << "running while code" << std::endl;
                 }
                 else
                 {
@@ -106,13 +107,18 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
             {
                 //int name data
                 integermodule tempmodeule;
-                std::stringstream(separatedcodeline.front()) >> tempmodeule.integerdata;
-                separatedcodeline.pop();
+
+                separatedcodeline.pop(); // pop the int
                 tempmodeule.integername = separatedcodeline.front();
-                separatedcodeline.pop();
+                separatedcodeline.pop();// pop the name
+                tempmodeule.integerdata = atoi(separatedcodeline.front().c_str());
+                //if I attempt to pop to clear the data, it crashes.  I don't know why
+
+                std::cout << "name: " << tempmodeule.integername << " value: " << tempmodeule.integerdata << std::endl;
+
                 intvector.push_back(tempmodeule);
                 tempmodeule = intvector[0];
-                std::cout << "name: " << tempmodeule.integername << "value: " << tempmodeule.integerdata << std::endl;
+
 
             }
             if(separatedcodeline.front() == "float")
