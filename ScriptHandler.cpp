@@ -35,23 +35,10 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
     //create stringstream
     //split the stringstream into parts
     //use those parts to run commands
-    struct integermodule{
-    int integerdata;
-    std::string integername;
-    };
-    struct stringmodule{
-    std::string stringdata;
-    std::string stringname;
-    };
-    struct floatmodule{
-    float floatdata;
-    std::string floatname;
-    };
     std::vector<integermodule> intvector;
     std::vector<floatmodule> floatvector;
     std::vector<stringmodule> stringvector;
-    //std::vector<int>
-    //std::vector<int>
+
     std::stringstream codeline;
     std::queue<std::string> separatedcodeline;
     int currentline = 0;
@@ -106,28 +93,46 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
             if(separatedcodeline.front() == "int")
             {
                 //int name data
-                integermodule tempmodeule;
+                integermodule tempmodule;
 
                 separatedcodeline.pop(); // pop the int
-                tempmodeule.integername = separatedcodeline.front();
+                tempmodule.integername = separatedcodeline.front();
                 separatedcodeline.pop();// pop the name
-                tempmodeule.integerdata = atoi(separatedcodeline.front().c_str());
+                tempmodule.integerdata = atoi(separatedcodeline.front().c_str());
                 //if I attempt to pop to clear the data, it crashes.  I don't know why
 
-                std::cout << "name: " << tempmodeule.integername << " value: " << tempmodeule.integerdata << std::endl;
-
-                intvector.push_back(tempmodeule);
-                tempmodeule = intvector[0];
-
+                intvector.push_back(tempmodule);
+                //tempmodule = intvector[0];
+                //std::cout << "name: " << tempmodule.integername << " value: " << tempmodule.integerdata << std::endl;
 
             }
             if(separatedcodeline.front() == "float")
             {
+              //std::cout << "begin float";
+              floatmodule tempmodule;
+
+              separatedcodeline.pop(); //pop the float
+              tempmodule.floatname = separatedcodeline.front();
+              separatedcodeline.pop();
+              tempmodule.floatdata = atof(separatedcodeline.front().c_str());
+
+              floatvector.push_back(tempmodule);
+              //tempmodule = floatvector[0];
+              //std::cout << "name: " << tempmodule.floatname << " value: " << tempmodule.floatdata << std::endl;
 
             }
             if(separatedcodeline.front() == "string")
             {
+              stringmodule tempmodule;
 
+              separatedcodeline.pop(); //pop the float
+              tempmodule.stringname = separatedcodeline.front();
+              separatedcodeline.pop();
+              tempmodule.stringdata = separatedcodeline.front();
+
+              stringvector.push_back(tempmodule);
+
+              //std::cout << tempmodule.stringname << tempmodule.stringdata;
             }
             if(separatedcodeline.front() == "print")
             {
