@@ -15,6 +15,7 @@ using std::string;
 using std::cout;
 using std::endl;
 using std::map;
+using std::pair;
 
 
 //I want to do these things
@@ -40,6 +41,7 @@ class ScriptHandler
         ScriptHandler();
         void OpenFileAtLine(string file, string line);
         void RunScript(std::vector<string> scriptdata);
+        bool checkconditions(std::queue<std::string> separatedcodeline);
     private:
         int Iwantaprivatevariable;
 

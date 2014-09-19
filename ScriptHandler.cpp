@@ -1,6 +1,8 @@
 #include "ScriptHandler.h"
 
-bool checkconditions(std::queue<std::string> separatedcodeline);
+//bool checkconditions(std::queue<std::string> separatedcodeline);
+template <class T>
+bool dooperation(T firstvariable, T secondvariable, string theoperator);
 
 ScriptHandler::ScriptHandler()
 {
@@ -206,46 +208,143 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
 
 //this is where I need to get variables, for now.
 //if(intmap.find(intigername) == m.end())
-bool checkconditions(std::queue<std::string> separatedcodeline)
-{
-                int firstvariable;
-                std::string theoperator;
-                int secondvariable;
-                std::stringstream(separatedcodeline.front()) >> firstvariable;
-                separatedcodeline.pop();
-                theoperator = separatedcodeline.front();
-                separatedcodeline.pop();
-                std::stringstream(separatedcodeline.front()) >> secondvariable;
 
-                    if (theoperator == "=")
-                    {
-                        if(firstvariable == secondvariable)
-                            return true;
-                    }
-                    if (theoperator == "!=")
-                    {
-                        if(firstvariable != secondvariable)
-                            return true;
-                    }
-                    if (theoperator == ">")
-                    {
-                        if(firstvariable > secondvariable)
-                            return true;
-                    }
-                    if (theoperator == "<")
-                    {
-                        if(firstvariable < secondvariable)
-                            return true;
-                    }
-                    if (theoperator == ">=")
-                    {
-                        if(firstvariable >= secondvariable)
-                            return true;
-                    }
-                    if (theoperator == "<=")
-                    {
-                        if(firstvariable <= secondvariable)
-                            return true;
-                    }
-                    return false;
+bool ScriptHandler::checkconditions(std::queue<std::string> separatedcodeline)
+{
+  //start with void pointers
+  //get a funcion that returns a pair: string and pointer
+  //use string to turn all the below pointers into the appropriate
+
+  string theoperator;
+  string firstvariable;
+  string secondvariable;
+
+  bool isfirstavariable;
+  bool issecondavariable;
+  string comparetypes = "int";
+  int firsti, secondi;
+  string firsts, seconds;
+  float firstf, secondf;
+
+  //get the inputs
+  firstvariable = separatedcodeline.front();
+  separatedcodeline.pop();
+  theoperator = separatedcodeline.front();
+  separatedcodeline.pop();
+  secondvariable = separatedcodeline.front();
+
+
+  //figure out what exactly the inputs are
+  //A is a variable type X, B isn't
+  //A is a variable type X, B is a variable type X
+  //A isn't, B is a variable type X
+
+  if(intmap.find(firstvariable) != intmap.end())
+  {
+    firsti = intmap[firstvariable];
+    isfirstavariable = true;
+    comparetypes = "int";
+  }
+  if(floatmap.find(firstvariable) != floatmap.end())
+  {
+    firstf = floatmap[firstvariable];
+    isfirstavariable = true;
+    comparetypes = "float";
+  }
+  if(stringmap.find(firstvariable) != stringmap.end())
+  {
+    firsts = stringmap[firstvariable];
+    isfirstavariable = true;
+    comparetypes = "string";
+  }
+
+  //begin comparison of second variable
+  if(intmap.find(secondvariable) != intmap.end())
+  {
+    secondi = intmap[secondvariable];
+    issecondavariable = true;
+    comparetypes = "int";
+  }
+  if(floatmap.find(secondvariable) != floatmap.end())
+  {
+    secondf = floatmap[secondvariable];
+    issecondavariable = true;
+    comparetypes = "float";
+  }
+  if(stringmap.find(secondvariable) != stringmap.end())
+  {
+    seconds = stringmap[secondvariable];
+    issecondavariable = true;
+    comparetypes = "string";
+  }
+
+  //if first wasn't a variable, assume it's of type the one that was a variable was
+  if(isfirstavariable == false)
+  {
+    //check type, convert first to said type
+    if(comparetypes == "int")
+      firsti = atoi(firstvariable.c_str());
+    if(comparetypes == "float")
+      firstf = atof(firstvariable.c_str());
+    if(comparetypes == "string")
+      firsts = firstvariable;
+  }
+
+  //same as first
+  if(issecondavariable == false)
+  {
+    //check type, convert second to said type
+    if(comparetypes == "int")
+      secondi = atoi(secondvariable.c_str());
+    if(comparetypes == "float")
+      secondf = atof(secondvariable.c_str());
+    if(comparetypes == "string")
+      seconds = secondvariable;
+  }
+
+  //run the comparisons default value will assume ints
+  if(comparetypes == "int")
+    return dooperation(firsti, secondi, theoperator);
+  if(comparetypes == "float")
+    return dooperation(firstf, secondf, theoperator);
+  if(comparetypes == "string")
+    return dooperation(firsts, seconds, theoperator);
+
+}
+
+template <class T>
+bool dooperation(T firstvariable, T secondvariable, string theoperator)
+{
+  cout << "First:" << firstvariable << " second: " << secondvariable << " OP: " << theoperator << endl;
+  if (theoperator == "=")
+  {
+      if(firstvariable == secondvariable)
+          return true;
+  }
+  if (theoperator == "!=")
+  {
+      if(firstvariable != secondvariable)
+          return true;
+  }
+  if (theoperator == ">")
+  {
+      if(firstvariable > secondvariable)
+          return true;
+  }
+  if (theoperator == "<")
+  {
+      if(firstvariable < secondvariable)
+          return true;
+  }
+  if (theoperator == ">=")
+  {
+      if(firstvariable >= secondvariable)
+          return true;
+  }
+  if (theoperator == "<=")
+  {
+      if(firstvariable <= secondvariable)
+          return true;
+  }
+  return false;
 }

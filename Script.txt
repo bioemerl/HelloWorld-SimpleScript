@@ -1,6 +1,9 @@
 int temp 33
 float temp1 33.223
 string stringvariable thisisastring
+if temp = 33
+print temp is equal to 33
+endif
 if 40 = 40
 print 40 is equal to 40
 endif
