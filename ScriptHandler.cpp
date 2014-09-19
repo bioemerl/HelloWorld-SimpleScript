@@ -35,9 +35,9 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
     //create stringstream
     //split the stringstream into parts
     //use those parts to run commands
-    std::vector<integermodule> intvector;
+    /*std::vector<integermodule> intvector;
     std::vector<floatmodule> floatvector;
-    std::vector<stringmodule> stringvector;
+    std::vector<stringmodule> stringvector;*/
 
     std::stringstream codeline;
     std::queue<std::string> separatedcodeline;
@@ -62,7 +62,7 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
             //std::cout << "separated " << separatedcodeline.back() << std::endl;
         }
 
-        if(ignoreline == false)
+        if(!ignoreline) //was ignoreline == false
         {
             //std::cout << "running code." << std::endl;
             if(separatedcodeline.front() == "if")
@@ -93,15 +93,19 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
             if(separatedcodeline.front() == "int")
             {
                 //int name data
-                integermodule tempmodule;
+                //integermodule tempmodule;
+                string integername;
+                int integerdata;
 
                 separatedcodeline.pop(); // pop the int
-                tempmodule.integername = separatedcodeline.front();
+                integername = separatedcodeline.front();
                 separatedcodeline.pop();// pop the name
-                tempmodule.integerdata = atoi(separatedcodeline.front().c_str());
+                integerdata = atoi(separatedcodeline.front().c_str());
                 //if I attempt to pop to clear the data, it crashes.  I don't know why
 
-                intvector.push_back(tempmodule);
+                //intvector.push_back(tempmodule);
+
+                intmap[integername] = integerdata;
                 //tempmodule = intvector[0];
                 //std::cout << "name: " << tempmodule.integername << " value: " << tempmodule.integerdata << std::endl;
 
@@ -109,29 +113,35 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
             if(separatedcodeline.front() == "float")
             {
               //std::cout << "begin float";
-              floatmodule tempmodule;
+              //floatmodule tempmodule;
+              string floatname;
+              float floatdata;
 
               separatedcodeline.pop(); //pop the float
-              tempmodule.floatname = separatedcodeline.front();
+              floatname = separatedcodeline.front();
               separatedcodeline.pop();
-              tempmodule.floatdata = atof(separatedcodeline.front().c_str());
+              floatdata = atof(separatedcodeline.front().c_str());
 
-              floatvector.push_back(tempmodule);
+              //floatvector.push_back(tempmodule);
+              floatmap[floatname] = floatdata;
               //tempmodule = floatvector[0];
               //std::cout << "name: " << tempmodule.floatname << " value: " << tempmodule.floatdata << std::endl;
 
             }
             if(separatedcodeline.front() == "string")
             {
-              stringmodule tempmodule;
+              //stringmodule tempmodule;
+              string stringname;
+              string stringdata;
 
               separatedcodeline.pop(); //pop the float
-              tempmodule.stringname = separatedcodeline.front();
+              stringname = separatedcodeline.front();
               separatedcodeline.pop();
-              tempmodule.stringdata = separatedcodeline.front();
+              stringdata = separatedcodeline.front();
 
-              stringvector.push_back(tempmodule);
-
+              //stringvector.push_back(tempmodule);
+              stringmap[stringname] = stringdata;
+              cout << stringmap[stringname] << "TESTING" << endl;
               //std::cout << tempmodule.stringname << tempmodule.stringdata;
             }
             if(separatedcodeline.front() == "print")
@@ -168,6 +178,8 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
                     ignoreline = false;
 
             }
+            //if the front value is equal to any variable look for more things
+            //lets make the variable lists into maps first
         }
 
 
@@ -191,6 +203,9 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
 
 //pre: needs a separatedcodeline with at least 3 variables.  1st number, second operator, third number
 //post: performs operation and returns true or false
+
+//this is where I need to get variables, for now.
+//if(intmap.find(intigername) == m.end())
 bool checkconditions(std::queue<std::string> separatedcodeline)
 {
                 int firstvariable;

@@ -9,6 +9,12 @@
 #include <cstdlib>
 #include <iostream>
 #include <stack>
+#include <map>
+
+using std::string;
+using std::cout;
+using std::endl;
+using std::map;
 
 
 //I want to do these things
@@ -19,15 +25,26 @@
 //run functions from other classes that are included
 //start script at some trigger points
 
+//to use a string to cal a function
+//use a map ["functionname"] = functionname(int a, int b)
+//then do int i = map["functionname"](1, 2);
+//then just map (heh) all the function you want to be able to run to the map
+
+//for a pointer that can point to anything use void * X;
+//to do *X then you have to typecast so void* anypointer
+//int i;  anypointer = &i;  int j = *(int*)anypointer
+
 class ScriptHandler
 {
     public:
         ScriptHandler();
-        void OpenFileAtLine(std::string file, std::string line);
-        void RunScript(std::vector<std::string> scriptdata);
+        void OpenFileAtLine(string file, string line);
+        void RunScript(std::vector<string> scriptdata);
     private:
         int Iwantaprivatevariable;
-        struct integermodule{
+
+        //TODO: I learned that maps exist, replace these with maps.
+        /*struct integermodule{
           int integerdata;
           std::string integername;
         };
@@ -38,7 +55,10 @@ class ScriptHandler
         struct floatmodule{
           float floatdata;
           std::string floatname;
-        };
+        };*/
+        map<string, int> intmap;
+        map<string, std::string> stringmap;
+        map<string, float> floatmap;
 };
 
 //untill I can get this to work, I have to do this
