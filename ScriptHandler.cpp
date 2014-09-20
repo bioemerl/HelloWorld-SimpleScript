@@ -87,11 +87,11 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
             if(separatedcodeline.front() == "while")
             {
                 //std::cout << "running while code" << std::endl;
-
                 separatedcodeline.pop();
 
                 if(checkconditions(separatedcodeline))
                 {
+                    //cout << "PUSHING LINE" << currentline << endl;
                     locationoflastwhile.push(currentline);
                     //std::cout << "running while code" << std::endl;
                 }
@@ -191,7 +191,9 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
                 //std::cout << "found end of while loop";
                 if(!locationoflastwhile.empty())
                 {
+                    ignoreline = false;
                     currentline = locationoflastwhile.top() - 1;
+                    //cout << "GOTO LINE" << locationoflastwhile.top() - 1 << endl;
                     locationoflastwhile.pop();
                 }
                 else if(ignoreline == false)
