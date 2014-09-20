@@ -49,6 +49,7 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
     bool ignoreline = false;
     std::string tempstring = "";
     std::stack<int> locationoflastwhile;
+    std::stack<int> locationoflastif;
 
     while(currentline < scriptdata.size()) //so long as there is a new line of code in the script
     {
@@ -64,11 +65,17 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
             //std::cout << "separated " << separatedcodeline.back() << std::endl;
         }
 
-        if(!ignoreline) //was ignoreline == false
+        if(ignoreline == false && !separatedcodeline.empty()) //was ignoreline == false
         {
+
             //std::cout << "running code." << std::endl;
+
+            //BUG IS DUE TO ENDIF ALWAYS SETTING IGNORELINETOFALSE
+            //I HAVE TO KNOW IF AN IF STATEMENT WAS TRUE IN ORDER TO DO THAT
             if(separatedcodeline.front() == "if")
             {
+                //if an if was run, add a location
+                locationoflastif.push(currentline);
                 //std::cout << "doing if code" << std::endl;
                 separatedcodeline.pop();
                 ignoreline = true;
@@ -80,14 +87,17 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
             if(separatedcodeline.front() == "while")
             {
                 //std::cout << "running while code" << std::endl;
+
                 separatedcodeline.pop();
-                if(checkconditions(separatedcodeline) == true)
+
+                if(checkconditions(separatedcodeline))
                 {
                     locationoflastwhile.push(currentline);
-                    std::cout << "running while code" << std::endl;
+                    //std::cout << "running while code" << std::endl;
                 }
                 else
                 {
+                    //cout << "flagging ignore line as true" << endl;
                     ignoreline = true;
                 }
 
@@ -96,13 +106,18 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
             {
                 //int name data
                 //integermodule tempmodule;
+                //cout << "BEGININTEGER" << endl;
                 string integername;
                 int integerdata;
 
                 separatedcodeline.pop(); // pop the int
                 integername = separatedcodeline.front();
+                //cout << "NAME: " << separatedcodeline.front() << endl;
                 separatedcodeline.pop();// pop the name
                 integerdata = atoi(separatedcodeline.front().c_str());
+                //cout << "VALUE: " << integerdata << endl;
+                //cout << "ENDINTEGER" << endl;
+
                 //if I attempt to pop to clear the data, it crashes.  I don't know why
 
                 //intvector.push_back(tempmodule);
@@ -163,8 +178,13 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
         {
             if(separatedcodeline.front() == "endif")
             {
+                //need to make this happen only if there was an if statement
                 //std::cout << "found end of if loop";
-                ignoreline = false;
+                if(!locationoflastif.empty())
+                {
+                  ignoreline = false;
+                  locationoflastif.pop();
+                }
             }
             if(separatedcodeline.front() == "endwhile")
             {
@@ -174,9 +194,9 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
                     currentline = locationoflastwhile.top() - 1;
                     locationoflastwhile.pop();
                 }
-                else if(locationoflastwhile.empty() == true && ignoreline == false)
+                else if(ignoreline == false)
                     std::cout<<"no while to co-respond to endwhile at line " << currentline + 1 << std::endl;
-                else if(locationoflastwhile.empty() == true && ignoreline == true)
+                else if(ignoreline == true)
                     ignoreline = false;
 
             }
@@ -315,7 +335,7 @@ bool ScriptHandler::checkconditions(std::queue<std::string> separatedcodeline)
 template <class T>
 bool dooperation(T firstvariable, T secondvariable, string theoperator)
 {
-  cout << "First:" << firstvariable << " second: " << secondvariable << " OP: " << theoperator << endl;
+  //cout << "First:" << firstvariable << " second: " << secondvariable << " OP: " << theoperator << endl;
   if (theoperator == "=")
   {
       if(firstvariable == secondvariable)
@@ -346,5 +366,6 @@ bool dooperation(T firstvariable, T secondvariable, string theoperator)
       if(firstvariable <= secondvariable)
           return true;
   }
+  //std::cin.get();
   return false;
 }

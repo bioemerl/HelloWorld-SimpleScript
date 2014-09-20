@@ -1,22 +1,16 @@
-int temp 33
-float temp1 33.223
-string stringvariable thisisastring
-if temp = 33
-print temp is equal to 33
+int ayy 10
+int bee 10
+int cee 1
+int ayy 10
+while ayy = bee
+if cee = 10
+int ayy 0
 endif
-if 40 = 40
-print 40 is equal to 40
+if cee = 5
+int cee 10
 endif
-if 40 > 60
-print 40 is greater than 60
-print 40 really is greater than 60
+if cee = 1
+int cee 5
 endif
-if 40 >= 40
-print 40 is greater than or equal to 40
-endif
-if 40 <= 50
-print 40 is less than or equal to fifty
-endif
-while 1001 = 100
 print this should work
 endwhile
