@@ -10,6 +10,7 @@
 #include <iostream>
 #include <stack>
 #include <map>
+#include "MathHandler.h"
 
 using std::string;
 using std::cout;
@@ -63,6 +64,4 @@ class ScriptHandler
         map<string, float> floatmap;
 };
 
-//untill I can get this to work, I have to do this
-#include "ScriptHandler.cpp"
 #endif // SCRIPTHANDLER_H

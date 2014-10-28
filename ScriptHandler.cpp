@@ -84,7 +84,7 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
                     ignoreline = false;
                 }
             }
-            if(separatedcodeline.front() == "while")
+            else if(separatedcodeline.front() == "while")
             {
                 //std::cout << "running while code" << std::endl;
                 separatedcodeline.pop();
@@ -102,7 +102,7 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
                 }
 
             }
-            if(separatedcodeline.front() == "int")
+            else if(separatedcodeline.front() == "int")
             {
                 //int name data
                 //integermodule tempmodule;
@@ -127,7 +127,7 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
                 //std::cout << "name: " << tempmodule.integername << " value: " << tempmodule.integerdata << std::endl;
 
             }
-            if(separatedcodeline.front() == "float")
+            else if(separatedcodeline.front() == "float")
             {
               //std::cout << "begin float";
               //floatmodule tempmodule;
@@ -145,7 +145,7 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
               //std::cout << "name: " << tempmodule.floatname << " value: " << tempmodule.floatdata << std::endl;
 
             }
-            if(separatedcodeline.front() == "string")
+            else if(separatedcodeline.front() == "string")
             {
               //stringmodule tempmodule;
               string stringname;
@@ -161,7 +161,7 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
               cout << stringmap[stringname] << "TESTING" << endl;
               //std::cout << tempmodule.stringname << tempmodule.stringdata;
             }
-            if(separatedcodeline.front() == "print")
+            else if(separatedcodeline.front() == "print")
             {
                 //std::cout << "running print code" << std::endl;
                 separatedcodeline.pop();
@@ -171,6 +171,10 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
                 separatedcodeline.pop();
                 }
                 std::cout << std::endl;
+            }
+            else
+            {
+              //see if the number is a variable or something
             }
         }
 
@@ -370,4 +374,17 @@ bool dooperation(T firstvariable, T secondvariable, string theoperator)
   }
   //std::cin.get();
   return false;
+}
+
+int dointoperation(int first, int second, string oper)
+{
+
+}
+float dofloatoperation(float first, float second, string oper)
+{
+
+}
+string dostringoperation(string first, string second, string oper)
+{
+  
 }
