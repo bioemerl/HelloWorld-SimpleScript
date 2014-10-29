@@ -161,16 +161,48 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
               cout << stringmap[stringname] << "TESTING" << endl;
               //std::cout << tempmodule.stringname << tempmodule.stringdata;
             }
+            else if(separatedcodeline.front() == "math") //math varname operation
+            {
+              separatedcodeline.pop();
+              std::cout << "doing math code" << std::endl;
+              std::string endvariable = separatedcodeline.front();
+              separatedcodeline.pop();
+
+              std::string operationstring = separatedcodeline.front();
+              separatedcodeline.pop();
+              intmap[endvariable] = domath(operationstring);
+
+            }
             else if(separatedcodeline.front() == "print")
             {
+                std::string varstring;
+
                 //std::cout << "running print code" << std::endl;
                 separatedcodeline.pop();
                 while(!separatedcodeline.empty())
                 {
-                std::cout << separatedcodeline.front() << " ";
-                separatedcodeline.pop();
+                  varstring = isvariabletype(separatedcodeline.front());
+                  if(varstring == "false")
+                  {
+                    std::cout << separatedcodeline.front() << " ";
+                  }
+                  else if(varstring == "int")
+                  {
+                    std::cout << intmap[separatedcodeline.front()] << " ";
+                  }
+                  else if(varstring == "float")
+                  {
+                    std::cout << floatmap[separatedcodeline.front()] << " ";
+                  }
+                  else if(varstring == "string")
+                  {
+                    std::cout << stringmap[separatedcodeline.front()] << " ";
+                  }
+                  separatedcodeline.pop();
                 }
                 std::cout << std::endl;
+
+
             }
             else
             {
@@ -376,15 +408,21 @@ bool dooperation(T firstvariable, T secondvariable, string theoperator)
   return false;
 }
 
-int dointoperation(int first, int second, string oper)
+//returns if the string exists as a variable
+//checks int, float, and bool variables though, be careful
+std::string ScriptHandler::isvariabletype(std::string teststring)
 {
-
-}
-float dofloatoperation(float first, float second, string oper)
-{
-
-}
-string dostringoperation(string first, string second, string oper)
-{
-  
+  if(intmap.find(teststring) != intmap.end())
+  {
+    return "int";
+  }
+  else if(floatmap.find(teststring) != floatmap.end())
+  {
+    return "float";
+  }
+  else if(stringmap.find(teststring) != stringmap.end())
+  {
+    return "string";
+  }
+  return "false";
 }

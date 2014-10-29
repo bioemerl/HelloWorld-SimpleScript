@@ -50,7 +50,7 @@ std::string turnvarstovals(std::string thestring)
 	for(int i = 0; i < thestring.size(); i++) //loops through the whole string
 	{
     //TODO: STEP ONE, GET THE VARIABLE
-		std::cout << i << std::endl;
+		//std::cout << i << std::endl;
     if(isalpha(thestring[i])) //trigger on the first letter
     {
       firstpos = i;
@@ -91,9 +91,9 @@ std::string turnvarstovals(std::string thestring)
 					std::cerr << "Failed to find Opening Parens for exponential operator" <<std::endl;
 				}
 				//Begin process of replicating what is in the parens
-				std::cout << locofopenparens << " " << locofcloseparens << std::endl;
+				//std::cout << locofopenparens << " " << locofcloseparens << std::endl;
 				replicatestring = thestring.substr(locofopenparens, locofcloseparens - locofopenparens);
-				std::cout << replicatestring <<std::endl;
+				//std::cout << replicatestring <<std::endl;
 			}
 			else
 			{
@@ -119,8 +119,8 @@ std::string turnvarstovals(std::string thestring)
 //TODO: devide this massive fucking thing into sub-parts.
 int mathhandler(std::string thestring)
 {
-	std::cout << "--------------" << std::endl;
-	std::cout << thestring << std::endl;
+	//std::cout << "--------------" << std::endl;
+	//std::cout << thestring << std::endl;
 
 	//find if there is a ) that is not the last character in the string
 	for(int i = 0; i < thestring.size(); i++)
@@ -130,7 +130,7 @@ int mathhandler(std::string thestring)
 		else if(thestring[i] == ')' && (i == thestring.size() - 1))
 		{ //if there is not remove the () from the string
 			thestring = thestring.substr(1, thestring.size() - 2);
-			std::cout << thestring << std::endl;
+			//std::cout << thestring << std::endl;
 		}
 	}
 
@@ -208,7 +208,7 @@ int mathhandler(std::string thestring)
 			return mathhandler(thestring.substr(1, thestring.size()-2)); //the string minus the ()
 		else //if case 2
 		{
-			std::cout << "Returning " <<  std::atoi(thestring.c_str()) << std::endl;
+			//std::cout << "Returning " <<  std::atoi(thestring.c_str()) << std::endl;
 			return std::atoi(thestring.c_str());
 		}
 
@@ -223,20 +223,20 @@ int mathhandler(std::string thestring)
 
 		switch(theoperator){
 			case '*':
-				std::cout << "calculating *" << std::endl;
+				//std::cout << "calculating *" << std::endl;
 				return (mathhandler(thestring.substr(0, splitlocation)) * mathhandler(thestring.substr(splitlocation + 1)));
 				break;
 			case '/':
-				std::cout << "calculating /" << std::endl;
+				//std::cout << "calculating /" << std::endl;
 				return ((mathhandler(thestring.substr(0, splitlocation))) / mathhandler(thestring.substr(splitlocation + 1)));
 				break;
 			case '+':
-				std::cout << "calculating +" << std::endl;
+				//std::cout << "calculating +" << std::endl;
 				//std::cout << thestring.substr(splitlocation + 1) << std::endl;
 				return (mathhandler(thestring.substr(0, splitlocation)) + mathhandler(thestring.substr(splitlocation + 1)));
 				break;
 			case '-':
-				std::cout << "calculating -" << std::endl;
+				//std::cout << "calculating -" << std::endl;
 				return ( (mathhandler(thestring.substr(0, splitlocation))) -  (mathhandler(thestring.substr(splitlocation + 1))) );
 				break;
 		}

@@ -29,3 +29,7 @@ int eff 7
 endif
 print thisshouldwork
 endwhile
+math eff 3+5
+if eff = 8
+print eff
+endif
