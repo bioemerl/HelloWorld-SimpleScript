@@ -24,9 +24,9 @@
 
 
 
-int domath(std::string thestring)
+int domath(std::string thestring, std::map<std::string, int> intmap, std::map<std::string, std::string> stringmap, std::map<std::string, float> floatmap)
 {
-	thestring = turnvarstovals(thestring);
+	thestring = turnvarstovals(thestring, intmap, stringmap, floatmap);
 	return mathhandler(thestring);
 }
 
@@ -41,31 +41,80 @@ int domath(std::string thestring)
 //find any ^
 //find the number after the ^
 //find the number(s) before the ^,
-std::string turnvarstovals(std::string thestring)
+std::string turnvarstovals(std::string thestring, std::map<std::string, int> intmap, std::map<std::string, std::string> stringmap, std::map<std::string, float> floatmap)
 {
-  std::string letters = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYy Zz";
+	if(DEBUG == true)
+	{
+		std::cout << "____VARSTOVALS_____" << std::endl;
+	}
+	std::string letters = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYy Zz";
   std::string variablestring;
-  int firstpos;
-  int secondpos;
+	int firstpos = 0;
+	int secondpos = -1;
 	for(int i = 0; i < thestring.size(); i++) //loops through the whole string
 	{
+		//reset the position values
+		firstpos = 0;
+		secondpos = -1;
     //TODO: STEP ONE, GET THE VARIABLE
 		//std::cout << i << std::endl;
     if(isalpha(thestring[i])) //trigger on the first letter
     {
+			if(DEBUG == true)
+				std::cout << "found alpha " << thestring[i] << " at" << i << std::endl;
       firstpos = i;
       secondpos = thestring.find_first_not_of(letters); //find the first non-character
-    }
+			if(DEBUG == true)
+			{
+				std::cout << "firstposition " << firstpos << std::endl;
+				std::cout << "secondposition " << secondpos << std::endl;
+			}
+		}
 		if(secondpos >= 0 && secondpos <= thestring.size()) //check if the string found any letters
 		{
+			if(DEBUG == true)
+				std::cout << "Running code to convert variable to number" << std::endl;
     	//I should have the first string of characters.  I now want to make two strings.
     	//one with the normal numbers, one with the string.
-    	thestring = thestring.substr(firstpos, secondpos-firstpos);
     	//TODO: now I need to use this to find the number I need
-    	variablestring = thestring.substr(0, firstpos) + thestring.substr(secondpos);
+    	variablestring = thestring.substr(firstpos, secondpos-firstpos);
+			thestring = thestring.substr(0, firstpos) + thestring.substr(secondpos);
+			if(DEBUG == true)
+				std::cout << "Found variable: " << variablestring << std::endl;
+			//TODO:
+			//now I need the number I want,
+			//then I want to insert that number into the string at firstpos
+			//I am currently passing stringmap, intmap, and floatmap to this function.
+			int repvar;
+			float frepvar;
+			std::string srepvar;
+			if(intmap.find(variablestring) != intmap.end())
+			{
+				repvar = intmap[variablestring];
+				std::stringstream constr;
+				constr << repvar;
+				std::string therepvar = constr.str();
+				thestring = thestring.substr(0, i) + therepvar + thestring.substr(i);
+			}
+			else if(stringmap.find(variablestring) != stringmap.end())
+			{
+				srepvar = stringmap[variablestring];
+				thestring = thestring.substr(0, i) + srepvar + thestring.substr(i + srepvar.size());
+			}
+			else if(floatmap.find(variablestring) != floatmap.end())
+			{
+				std::stringstream fconstr;
+				fconstr >> frepvar;
+				std::string thefrepvar = fconstr.str();
+				frepvar = floatmap[variablestring];
+				thestring = thestring.substr(0, i) + thefrepvar + thestring.substr(i + thefrepvar.size());
+			}
+			if(DEBUG == true)
+				std::cout << "Completed string: " << thestring << std::endl;
+
 		}
 
-    //DONE: STEP TWO, FIND EXPONENTS
+    //STEP TWO: FIND EXPONENTS
     if(thestring[i] == '^')
     {
       //DONE: find and replicate areas of (2x+5)^5
@@ -108,6 +157,11 @@ std::string turnvarstovals(std::string thestring)
 			}
     }
 
+	}
+	if(DEBUG == true)
+	{
+		std::cout << "returning " << thestring <<std::endl;
+		std::cout << "____ENDVARSTOVALS_____" << std::endl;
 	}
 	return thestring;
 }

@@ -1,35 +1,8 @@
-int ayy 10
+int ayy 20
 int bee 10
-int cee 1
-int dee 20
-int eee 20
-int eff 2
-while ayy = bee
-if cee = 10
-print thirdop
-int ayy 0
-endif
-if cee = 5
-print secondop
-int cee 10
-endif
-if cee = 1
-print firstop
-int cee 5
-endif
-while dee = eee
-if eff = 14
-int dee 9
-endif
-if eff = 7
-int eff 14
-endif
-if eff = 2
-int eff 7
-endif
-print thisshouldwork
-endwhile
-math eff 3+5
-if eff = 8
-print eff
-endif
+print ayy
+math ayy ayy+10
+print ayy
+math ayy ayy+10
+print test
+print ayy

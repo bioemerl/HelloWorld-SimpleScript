@@ -6,5 +6,7 @@ using namespace std;
 int main()
 {
     ScriptHandler testing;
+    int test;
+    cin >> test;
     return 0;
 }

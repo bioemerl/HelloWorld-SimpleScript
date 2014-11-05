@@ -6,9 +6,12 @@
 #include <vector>
 #include <string>
 #include <cstdlib>
+#include <sstream>
 
-std::string turnvarstovals(std::string thestring);
+//TODO: make this handle variables
+const bool DEBUG = false;
+std::string turnvarstovals(std::string thestring, std::map<std::string, int> intmap, std::map<std::string, std::string> stringmap, std::map<std::string, float> floatmap);
 int mathhandler(std::string thestring);
-int domath(std::string thestring);
+int domath(std::string thestring, std::map<std::string, int> intmap, std::map<std::string, std::string> stringmap, std::map<std::string, float> floatmap);
 
 #endif

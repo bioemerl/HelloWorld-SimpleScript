@@ -33,6 +33,7 @@ void ScriptHandler::OpenFileAtLine(std::string file, std::string line)
 
 void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
 {
+    //TODO: make a better, more intuitive process for math
     //std::cout << "got dem strings! See? " <<  scriptdata[3] << std::endl;
     //create stringstream
     //split the stringstream into parts
@@ -164,13 +165,13 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
             else if(separatedcodeline.front() == "math") //math varname operation
             {
               separatedcodeline.pop();
-              std::cout << "doing math code" << std::endl;
+              //std::cout << "doing math code" << std::endl;
               std::string endvariable = separatedcodeline.front();
               separatedcodeline.pop();
 
               std::string operationstring = separatedcodeline.front();
               separatedcodeline.pop();
-              intmap[endvariable] = domath(operationstring);
+              intmap[endvariable] = domath(operationstring, intmap, stringmap, floatmap);
 
             }
             else if(separatedcodeline.front() == "print")
