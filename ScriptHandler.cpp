@@ -168,9 +168,12 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
               //std::cout << "doing math code" << std::endl;
               std::string endvariable = separatedcodeline.front();
               separatedcodeline.pop();
-
-              std::string operationstring = separatedcodeline.front();
-              separatedcodeline.pop();
+              std::string operationstring;
+              while(!separatedcodeline.empty())
+              {
+                operationstring = operationstring + separatedcodeline.front();
+                separatedcodeline.pop();
+              }
               intmap[endvariable] = domath(operationstring, intmap, stringmap, floatmap);
 
             }

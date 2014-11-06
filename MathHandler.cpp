@@ -1,9 +1,3 @@
-//I WANT TO MAKE THIS WORK WITH NUMBERS
-//REPLACE VARS WITH THEIR CORESPONDING NUMBERS
-//THEN DO PEMDAS MULT FIRST, DEVISION THEN ADD THEN SUBTRACT, HANDLE PARENS AS NORMAL
-//HANDLE EXPONENTS AS YOU HANDLE NEGATION IN THE ORIGINAL
-
-
 //Ways to handle exponents
 //situation one X^3 easy
 //situation two (X+5)^3 hard
@@ -26,6 +20,7 @@
 
 int domath(std::string thestring, std::map<std::string, int> intmap, std::map<std::string, std::string> stringmap, std::map<std::string, float> floatmap)
 {
+	//thestring = removespaces(thestring);
 	thestring = turnvarstovals(thestring, intmap, stringmap, floatmap);
 	return mathhandler(thestring);
 }
@@ -47,7 +42,7 @@ std::string turnvarstovals(std::string thestring, std::map<std::string, int> int
 	{
 		std::cout << "____VARSTOVALS_____" << std::endl;
 	}
-	std::string letters = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYy Zz";
+	std::string letters = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
   std::string variablestring;
 	int firstpos = 0;
 	int secondpos = -1;
@@ -296,4 +291,20 @@ int mathhandler(std::string thestring)
 		}
 
 	}
+}
+
+std::string removespaces(std::string thestring)
+{
+	if(DEBUG == true)
+		std::cout << "Before removal: " << thestring << std::endl;
+	for(int i = 0; i < thestring.size(); i++)
+	{
+		if(thestring[i] == ' ')
+		{
+			thestring = thestring.substr(0, i) + thestring.substr(i+1);
+		}
+	}
+	if(DEBUG == true)
+		std::cout << "Removed spaces: " << thestring << std::endl;
+	return thestring;
 }

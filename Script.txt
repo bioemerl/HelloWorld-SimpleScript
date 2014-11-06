@@ -3,6 +3,6 @@ int bee 10
 print ayy
 math ayy ayy+10
 print ayy
-math ayy ayy+10
+math ayy ayy + 10
 print test
 print ayy
