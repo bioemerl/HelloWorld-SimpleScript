@@ -1,18 +1,3 @@
-//Ways to handle exponents
-//situation one X^3 easy
-//situation two (X+5)^3 hard
-//situation sin(x)^3 even harder
-//going to ignore situation three
-//possible solutions
-//1.  find areas with )^# and run the domath() on the parens, replace parens with number
-//2.  Find and treat ^ as an operator
-//3.  don't allow exponents at all
-//4.  don't allow exponents after a parens (x + 5)^2 is not x^2 + 5 ^2
-//5.  make ^2 a "repeat operator" that makes the previous operatoer add into the string X times
-//6.  (5^2) => (5*5) 5^3 => (5*5*5)
-//would only work for pos int exponents
-//if negative make 1/(5^3)
-//
 #include "MathHandler.h"
 
 
@@ -25,17 +10,7 @@ int domath(std::string thestring, std::map<std::string, int> intmap, std::map<st
 	return mathhandler(thestring);
 }
 
-//TODO:1  Replace all non-letter values with numbers
-//first step is to find a letter
-//second is to find all letters after that
-//third is to condense those letters into a string,
-//find that string as a variable,
-//and replace the letters with that number
 
-//TODO:2 find all exponents, repeat previous item X number of times 5^3 = "5" + "*5*5"
-//find any ^
-//find the number after the ^
-//find the number(s) before the ^,
 std::string turnvarstovals(std::string thestring, std::map<std::string, int> intmap, std::map<std::string, std::string> stringmap, std::map<std::string, float> floatmap)
 {
 	if(DEBUG == true)
@@ -165,6 +140,13 @@ std::string turnvarstovals(std::string thestring, std::map<std::string, int> int
 
 //TODO: should be working, honestly, I hope.
 //TODO: make the function work with things other than int
+//
+//how to do this?
+//Methods: use templates
+//Return a double by default, make all vars doubles, remove strings
+//return an int by default, make all vars ints, remove strings
+//I honestly am not sure
+//
 //TODO: devide this massive fucking thing into sub-parts.
 int mathhandler(std::string thestring)
 {

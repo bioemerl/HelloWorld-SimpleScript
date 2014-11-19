@@ -6,6 +6,33 @@ bool dooperation(T firstvariable, T secondvariable, string theoperator);
 
 ScriptHandler::ScriptHandler()
 {
+  std::cout << "WARNING: Scripts cannot run functions without a passed handler";
+  std::cout << "See documentation(doesn't exist) for how it should work\n";
+  hasfunctionhandler = false;
+  std::vector<std::string> inputstrings;
+  std::ifstream scriptfile;
+  scriptfile.open("Script.txt");
+  if(scriptfile.fail())
+      std::cout << "file failed to open";
+  else
+  {
+      int i = 0;
+      std::string tempstring;
+      while(getline(scriptfile, tempstring))
+      {
+          //getline(scriptfile, tempstring);
+          if(SCRIPTHANDLERDEBUG == true)
+            std::cout << "got string " <<  tempstring << std::endl;
+          inputstrings.push_back(tempstring);
+          tempstring = "";
+      }
+      RunScript(inputstrings);
+  }
+}
+ScriptHandler::ScriptHandler(std::function<void(string)> passedhandler)
+{
+    hasfunctionhandler = true;
+    functionhandler = passedhandler;
     std::vector<std::string> inputstrings;
     std::ifstream scriptfile;
     scriptfile.open("Script.txt");
@@ -18,7 +45,8 @@ ScriptHandler::ScriptHandler()
         while(getline(scriptfile, tempstring))
         {
             //getline(scriptfile, tempstring);
-            std::cout << "got string " <<  tempstring << std::endl;
+            if(SCRIPTHANDLERDEBUG == true)
+              std::cout << "got string " <<  tempstring << std::endl;
             inputstrings.push_back(tempstring);
             tempstring = "";
         }
@@ -176,6 +204,19 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
               }
               intmap[endvariable] = domath(operationstring, intmap, stringmap, floatmap);
 
+            }
+            else if(separatedcodeline.front() == "function")
+            {
+              separatedcodeline.pop();
+              if(hasfunctionhandler == true)
+              {
+                functionhandler(separatedcodeline.front());
+                separatedcodeline.pop();
+              }
+              else
+              {
+                std::cout << "ERR: FUNCT LINE:" << codeline << " Function handler does not exist\n";
+              }
             }
             else if(separatedcodeline.front() == "print")
             {
