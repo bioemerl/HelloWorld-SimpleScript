@@ -210,8 +210,15 @@ void ScriptHandler::RunScript(std::vector<std::string> scriptdata)
               separatedcodeline.pop();
               if(hasfunctionhandler == true)
               {
-                functionhandler(separatedcodeline.front());
+                std::string functionstring;
+                functionstring = separatedcodeline.front();
                 separatedcodeline.pop();
+                while(!separatedcodeline.empty())
+                {
+                  functionstring = functionstring + " " + separatedcodeline.front();
+                  separatedcodeline.pop();
+                }
+                functionhandler(functionstring);
               }
               else
               {
